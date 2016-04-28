@@ -1,0 +1,81 @@
+﻿using CommandLine;
+using CommandLine.Text;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace git2ai
+{
+    public class Options
+    {
+        [Option('g', "gitdir", Required = true,
+            HelpText = "Path to .git directory")]
+        public string GitDir { get; set; }
+
+        [Option('a', "assemblyinfodir", Required = true,
+            HelpText = "Root to search for AssemblyInfo.cs files")]
+        public string AssemblyInfoRootDir { get; set; }
+
+        [Option('r', "recursive", Required = false, DefaultValue = "true",
+            HelpText = "If true: Includes sub directories from assemblyinfodir")]
+        public string SearchRecursive { get; set; }
+
+        [Option('p', "searchpattern", Required = false, DefaultValue = "*AssemblyInfo.cs",
+            HelpText = "Search pattern to use for finding AssemblyInfo files")]
+        public string SearchPattern { get; set; }
+
+        [ParserState]
+        public IParserState LastParserState { get; set; }
+
+        [HelpOption]
+        public string GetUsage()
+        {
+            return HelpText.AutoBuild(this,
+              (HelpText current) => HelpText.DefaultParsingErrorsHandler(this, current));
+        }
+    }
+
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            var options = new Options();
+            if (Parser.Default.ParseArguments(args, options))
+            {
+                Process(
+                    options.GitDir,
+                    options.AssemblyInfoRootDir,
+                    options.SearchRecursive.Equals("true", StringComparison.InvariantCultureIgnoreCase),
+                    options.SearchPattern);
+            }
+        }
+
+        static void Process(string gitDir, string assemblyInfoDir, bool searchRecursive, string searchPattern)
+        {
+            var replacer = new Replacer();
+            var files = replacer.FindFiles(assemblyInfoDir, searchPattern, searchRecursive);
+
+            if (files.Any())
+            {
+                Console.WriteLine($"Found {files.Count()} file(s)");
+                foreach (var file in files)
+                {
+                    Console.WriteLine($"- {file}");
+                }
+
+                var valueProvider = new GitDataProvider();
+                var values = valueProvider.GetValues(gitDir);
+
+                replacer.ReplacePlaceholders(files, values);
+            }
+            else
+            {
+                Console.WriteLine("No files found.");
+            }
+
+            Console.WriteLine("Completed");
+        }
+    }
+}

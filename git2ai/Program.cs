@@ -44,11 +44,18 @@ namespace git2ai
             var options = new Options();
             if (Parser.Default.ParseArguments(args, options))
             {
-                Process(
-                    options.GitDir,
-                    options.AssemblyInfoRootDir,
-                    options.SearchRecursive.Equals("true", StringComparison.InvariantCultureIgnoreCase),
-                    options.SearchPattern);
+                try
+                {
+                    Process(
+                        options.GitDir,
+                        options.AssemblyInfoRootDir,
+                        options.SearchRecursive.Equals("true", StringComparison.InvariantCultureIgnoreCase),
+                        options.SearchPattern);
+                }
+                catch(Exception exc)
+                {
+                    Console.WriteLine($"Failed to process file. Exception: {exc.ToString()}");
+                }
             }
         }
 

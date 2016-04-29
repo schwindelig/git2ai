@@ -32,7 +32,8 @@ namespace git2ai
 
                 var describe = repo.Describe(head, new DescribeOptions()
                 {
-                    Strategy = DescribeStrategy.Tags
+                    Strategy = DescribeStrategy.Tags,
+                    UseCommitIdAsFallback = true
                 });
 
                 var dirty = repo.RetrieveStatus().IsDirty ? "-dirty" : string.Empty;

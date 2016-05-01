@@ -13,6 +13,11 @@ Result: -dirty
 Takes the "--dirty" part from --git describe --always --dirty. Appends "-dirty" if dirty, otherwise empty.
 
 ## Usage
+### Installation
+- Build with VS
+- Copy git2ai.exe and CommandLine.dll to the a directory of your choice.
+- Call git2ai from cmd, pre-build command or whatever
+
 ### Parameters
  -g, --gitdir             Required. Path to .git directory
 
@@ -23,7 +28,10 @@ Takes the "--dirty" part from --git describe --always --dirty. Appends "-dirty" 
 
   -p, --searchpattern      (Default: *AssemblyInfo.cs) Search pattern to use
                            for finding AssemblyInfo files
-
-  --help                   Display this help screen.
   
-  ### Example
+### Example
+Basic: git2ai -g d:\moonstone\.git -a d:\moonstone
+
+Different search pattern: git2ai -g d:\moonstone\.git -a d:\moonstone -p *GlobalAssemblyInfo.cs
+ 
+Non recursive search: git2ai -g d:\moonstone\.git -a d:\moonstone -r false

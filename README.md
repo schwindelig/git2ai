@@ -16,7 +16,7 @@ Takes the "--dirty" part from --git describe --always --dirty. Appends "-dirty" 
 ### Installation
 - Build with VS
 - Copy git2ai.exe and CommandLine.dll to the a directory of your choice.
-- Call git2ai from cmd, pre-build command or whatever
+- Call git2ai from cmd, pre-build command, etc.
 
 ### Parameters
  -g, --gitdir             Required. Path to .git directory

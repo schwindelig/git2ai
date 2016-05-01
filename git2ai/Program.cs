@@ -2,6 +2,7 @@
 using CommandLine.Text;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,12 +62,23 @@ namespace git2ai
 
         static void Process(string gitDir, string assemblyInfoDir, bool searchRecursive, string searchPattern)
         {
+            if(!Directory.Exists(gitDir))
+            {
+                Console.WriteLine("GitDir not valid.");
+                return;
+            }
+            if(!Directory.Exists(assemblyInfoDir))
+            {
+                Console.WriteLine("AssemblyInfoDir not valid.");
+                return;
+            }
+
             var replacer = new Replacer();
             var files = replacer.FindFiles(assemblyInfoDir, searchPattern, searchRecursive);
 
             if (files.Any())
             {
-                Console.WriteLine($"Found {files.Count()} file(s)");
+                Console.WriteLine($"Found {files.Count()} file(s):");
                 foreach (var file in files)
                 {
                     Console.WriteLine($"- {file}");

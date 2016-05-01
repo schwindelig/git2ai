@@ -1,5 +1,7 @@
 # git2ai
-Tries to replace placeholders in AssemblyInfo.cs with git data. Use at your own risk.
+Tries to replace placeholders in AssemblyInfo.cs with information form your git repository. Quick and dirty solution for internal use at schwindelig.ch. Use at your own risk.
+
+Requires .NET Framework 4.6.1
 
 ## Placeholders
 There are currently only 2 placeholders you can use:

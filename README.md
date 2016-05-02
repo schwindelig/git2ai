@@ -38,4 +38,4 @@ Basic: git2ai -g d:\solution\\.git -a d:\solution
 
 Different search pattern: git2ai -g d:\solution\\.git -a d:\solution -p *GlobalAssemblyInfo.cs
  
-Non recursive search: git2ai -g d:\solution\\.git -a d:\solution -r false
+Non-recursive search: git2ai -g d:\solution\\.git -a d:\solution -r false

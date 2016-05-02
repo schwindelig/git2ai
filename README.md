@@ -34,8 +34,8 @@ Takes the "--dirty" part from --git describe --always --dirty. Appends "-dirty" 
                            for finding AssemblyInfo files
   
 ### Example
-Basic: git2ai -g d:\moonstone\\.git -a d:\moonstone
+Basic: git2ai -g d:\solution\\.git -a d:\solution
 
-Different search pattern: git2ai -g d:\moonstone\\.git -a d:\moonstone -p *GlobalAssemblyInfo.cs
+Different search pattern: git2ai -g d:\solution\\.git -a d:\solution -p *GlobalAssemblyInfo.cs
  
-Non recursive search: git2ai -g d:\moonstone\\.git -a d:\moonstone -r false
+Non recursive search: git2ai -g d:\solution\\.git -a d:\solution -r false

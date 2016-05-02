@@ -4,7 +4,7 @@ Replaces placeholders in AssemblyInfo.cs with information form a git repository.
 Requires .NET Framework 4.6.1
 
 ## Placeholders
-There are currently only 2 placeholders you can use:
+There are currently 2 placeholders you can use:
 
 ### {describe-tags}
 Result: v0.0.1-pre-alpha-4-g03530aa
@@ -19,8 +19,8 @@ Takes the "--dirty" part from --git describe --always --dirty. Appends "-dirty" 
 ## Usage
 ### Installation
 - Build with VS
-- Copy git2ai.exe and CommandLine.dll to the a directory of your choice.
-- Call git2ai from cmd, pre-build command, etc.
+- Copy git2ai.exe, CommandLine.dll, Libgit2sharp.dll and the NativeBinaries folder to a directory of your choice.
+- Call git2ai with the params specified below.
 
 ### Parameters
  -g, --gitdir             Required. Path to .git directory

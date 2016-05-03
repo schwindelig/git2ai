@@ -20,7 +20,7 @@ namespace git2ai
             return files;
         }
 
-        public void ReplacePlaceholders(string[] files, IEnumerable<GitValue> gitValues)
+        public void ReplacePlaceholders(string[] files, IEnumerable<GitValue> gitValues, string outputPath, bool inPlace)
         {
             foreach (var filePath in files)
             {
@@ -39,12 +39,27 @@ namespace git2ai
                         Console.WriteLine($"- Replaced \"{gitValue.Placeholder}\" with \"{gitValue.Value}\"");
                     }
                 }
-                if(!replaced)
+                if (!replaced)
                 {
                     Console.WriteLine("- No placeholder found");
                 }
 
-                File.WriteAllText(filePath, content, Encoding.UTF8);
+                if (string.IsNullOrWhiteSpace(outputPath))
+                {
+                    outputPath = filePath;
+                }
+                else
+                {
+                    if(inPlace)
+                    {
+                        var fileName = new FileInfo(outputPath).Name;
+                        var basePath = new DirectoryInfo(filePath).FullName;
+
+                    }
+                    var path = Path.GetDirectoryName(filePath);
+                }
+
+                File.WriteAllText(outputPath, content, Encoding.UTF8);
             }
         }
     }

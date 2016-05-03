@@ -27,6 +27,12 @@ namespace git2ai
             HelpText = "Search pattern to use for finding AssemblyInfo files")]
         public string SearchPattern { get; set; }
 
+        [Option('o', "output", Required = false, DefaultValue = null)]
+        public string OutputPath { get; set; }
+
+        [Option('i', "inplace", Required = false, DefaultValue = false)]
+        public string InPlace { get; set; }
+
         [ParserState]
         public IParserState LastParserState { get; set; }
 
@@ -51,7 +57,10 @@ namespace git2ai
                         options.GitDir,
                         options.AssemblyInfoRootDir,
                         options.SearchRecursive.Equals("true", StringComparison.InvariantCultureIgnoreCase),
-                        options.SearchPattern);
+                        options.SearchPattern,
+                        options.OutputPath,
+                        options.InPlace.Equals("true", StringComparison.InvariantCultureIgnoreCase)
+                    );
                 }
                 catch(Exception exc)
                 {
@@ -60,7 +69,7 @@ namespace git2ai
             }
         }
 
-        static void Process(string gitDir, string assemblyInfoDir, bool searchRecursive, string searchPattern)
+        static void Process(string gitDir, string assemblyInfoDir, bool searchRecursive, string searchPattern, string outputPath, bool inPlace)
         {
             if(!Directory.Exists(gitDir))
             {
@@ -87,7 +96,7 @@ namespace git2ai
                 var valueProvider = new GitDataProvider();
                 var values = valueProvider.GetValues(gitDir);
 
-                replacer.ReplacePlaceholders(files, values);
+                replacer.ReplacePlaceholders(files, values, outputPath, inPlace);
             }
             else
             {

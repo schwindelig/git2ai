@@ -20,7 +20,7 @@ namespace git2ai
             return files;
         }
 
-        public void ReplacePlaceholders(string[] files, IEnumerable<GitValue> gitValues, string outputPath, bool inPlace)
+        public void ReplacePlaceholders(string[] files, IEnumerable<GitValue> gitValues, string outputPath)
         {
             foreach (var filePath in files)
             {
@@ -50,13 +50,15 @@ namespace git2ai
                 }
                 else
                 {
-                    if(inPlace)
+                    if (outputPath.StartsWith("\\"))
                     {
-                        var fileName = new FileInfo(outputPath).Name;
-                        var basePath = new DirectoryInfo(filePath).FullName;
-
+                        var basePath = new FileInfo(filePath).DirectoryName;
+                        // Path.Combine will return the second argument if it begins with a separation character (\). (see: http://stackoverflow.com/questions/6929262/why-wont-this-path-combine-work)
+                        outputPath = Path.Combine(basePath, outputPath.Replace("\\", string.Empty));
                     }
-                    var path = Path.GetDirectoryName(filePath);
+
+                    // Create directory if necessary.
+                    Directory.CreateDirectory(new FileInfo(outputPath).DirectoryName);
                 }
 
                 File.WriteAllText(outputPath, content, Encoding.UTF8);

@@ -12,20 +12,24 @@ namespace git2ai
     public class Options
     {
         [Option('g', "gitdir", Required = true,
-            HelpText = "Path to .git directory")]
+            HelpText = OptionDescriptions.GitDir)]
         public string GitDir { get; set; }
 
         [Option('a', "assemblyinfodir", Required = true,
-            HelpText = "Root to search for AssemblyInfo.cs files")]
+            HelpText = OptionDescriptions.AssemblyInfoDir)]
         public string AssemblyInfoRootDir { get; set; }
 
         [Option('r', "recursive", Required = false, DefaultValue = "true",
-            HelpText = "If true: Includes sub directories from assemblyinfodir")]
+            HelpText = OptionDescriptions.SearchRecursive)]
         public string SearchRecursive { get; set; }
 
         [Option('p', "searchpattern", Required = false, DefaultValue = "*AssemblyInfo.cs",
-            HelpText = "Search pattern to use for finding AssemblyInfo files")]
+            HelpText = OptionDescriptions.SearchPattern)]
         public string SearchPattern { get; set; }
+
+        [Option('o', "output", Required = false, DefaultValue = null,
+            HelpText = OptionDescriptions.Output)]
+        public string Output { get; set; }
 
         [ParserState]
         public IParserState LastParserState { get; set; }
@@ -51,7 +55,9 @@ namespace git2ai
                         options.GitDir,
                         options.AssemblyInfoRootDir,
                         options.SearchRecursive.Equals("true", StringComparison.InvariantCultureIgnoreCase),
-                        options.SearchPattern);
+                        options.SearchPattern,
+                        options.Output
+                    );
                 }
                 catch(Exception exc)
                 {
@@ -60,7 +66,7 @@ namespace git2ai
             }
         }
 
-        static void Process(string gitDir, string assemblyInfoDir, bool searchRecursive, string searchPattern)
+        static void Process(string gitDir, string assemblyInfoDir, bool searchRecursive, string searchPattern, string outputPath)
         {
             if(!Directory.Exists(gitDir))
             {
@@ -87,7 +93,7 @@ namespace git2ai
                 var valueProvider = new GitDataProvider();
                 var values = valueProvider.GetValues(gitDir);
 
-                replacer.ReplacePlaceholders(files, values);
+                replacer.ReplacePlaceholders(files, values, outputPath);
             }
             else
             {

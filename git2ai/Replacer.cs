@@ -20,7 +20,7 @@ namespace git2ai
             return files;
         }
 
-        public void ReplacePlaceholders(string[] files, IEnumerable<GitValue> gitValues)
+        public void ReplacePlaceholders(string[] files, IEnumerable<GitValue> gitValues, string outputPath)
         {
             foreach (var filePath in files)
             {
@@ -39,12 +39,29 @@ namespace git2ai
                         Console.WriteLine($"- Replaced \"{gitValue.Placeholder}\" with \"{gitValue.Value}\"");
                     }
                 }
-                if(!replaced)
+                if (!replaced)
                 {
                     Console.WriteLine("- No placeholder found");
                 }
 
-                File.WriteAllText(filePath, content, Encoding.UTF8);
+                if (string.IsNullOrWhiteSpace(outputPath))
+                {
+                    outputPath = filePath;
+                }
+                else
+                {
+                    if (outputPath.StartsWith("\\"))
+                    {
+                        var basePath = new FileInfo(filePath).DirectoryName;
+                        // Path.Combine will return the second argument if it begins with a separation character (\). (see: http://stackoverflow.com/questions/6929262/why-wont-this-path-combine-work)
+                        outputPath = Path.Combine(basePath, outputPath.Replace("\\", string.Empty));
+                    }
+
+                    // Create directory if necessary.
+                    Directory.CreateDirectory(new FileInfo(outputPath).DirectoryName);
+                }
+
+                File.WriteAllText(outputPath, content, Encoding.UTF8);
             }
         }
     }

@@ -8,7 +8,7 @@ namespace git2ai
 {
     public class OptionDescriptions
     {
-        public const string GitDir = "Path to.git directory";
+        public const string GitDir = "Path to .git directory";
 
         public const string AssemblyInfoDir = "Root to search for AssemblyInfo.cs files";
 

@@ -23,7 +23,8 @@ Takes the "--dirty" part from --git describe --always --dirty. Appends "-dirty" 
 - Call git2ai with the params specified below.
 
 ### Parameters
- -g, --gitdir             Required. Path to .git directory
+
+  -g, --gitdir             Required. Path to .git directory
 
   -a, --assemblyinfodir    Required. Root to search for AssemblyInfo.cs files
 
@@ -32,6 +33,12 @@ Takes the "--dirty" part from --git describe --always --dirty. Appends "-dirty" 
 
   -p, --searchpattern      (Default: *AssemblyInfo.cs) Search pattern to use
                            for finding AssemblyInfo files
+
+  -o, --output             (Default: ) Defines the output file. If this value
+                           is set, the placeholders in the original file will
+                           not be replaced. If the output path starts with '',
+                           the generated file will be placed relative to the
+                           file which was used as template.
   
 ### Example
 Basic: git2ai -g d:\solution\\.git -a d:\solution

@@ -1,5 +1,7 @@
 # git2ai
-Replaces placeholders in AssemblyInfo.cs with information form a git repository. Quick and dirty solution for internal use at schwindelig.ch. Use at your own risk.
+Replaces placeholders in AssemblyInfo.cs or any other file with information form a git repository (or alternatively generates a new file). Quick and dirty solution for internal use at schwindelig.ch. Use at your own risk.
+
+Uses [libgit2sharp] and [Command Line Parser Library]
 
 Requires .NET Framework 4.6.1
 
@@ -46,3 +48,7 @@ Basic: git2ai -g d:\solution\\.git -a d:\solution
 Different search pattern: git2ai -g d:\solution\\.git -a d:\solution -p *GlobalAssemblyInfo.cs
  
 Non-recursive search: git2ai -g d:\solution\\.git -a d:\solution -r false
+
+
+[libgit2sharp]: https://github.com/libgit2/libgit2sharp
+[Command Line Parser Library]: https://github.com/gsscoder/commandline

@@ -1,5 +1,5 @@
 # git2ai
-Replaces placeholders in AssemblyInfo.cs or any other file with information form a git repository (or alternatively generates a new file). Quick and dirty solution for internal use at schwindelig.ch. Use at your own risk.
+Replaces placeholders in AssemblyInfo.cs or any other file with information form a git repository (or alternatively generates a new file). Quick and dirty solution, use at your own risk.
 
 Uses [libgit2sharp] and [Command Line Parser Library]
 
